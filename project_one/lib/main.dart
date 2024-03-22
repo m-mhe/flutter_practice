@@ -45,8 +45,10 @@ class Home extends StatelessWidget{
                 duration: Duration(microseconds: 200000),
               )
           );
-        }, icon: Icon(Icons.info),
-        color: Colors.green.shade900,)
+        }, icon: Icon(Icons.info,
+          color: Colors.green.shade900
+          )
+         )
         ],
       ),
       body: Column(
