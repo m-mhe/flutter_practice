@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
+//import section
+import 'package:flutter/material.dart'; //Importing material design system.
 
+//Code execution point.
 void main(){
   runApp(MyApp());
 }
 
+//This custom widget(class) contain material design system.
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( //We set our app configuration in here.
       debugShowCheckedModeBanner: false,
       title: "MMHE",
       home: Home(),
@@ -15,24 +18,25 @@ class MyApp extends StatelessWidget{
   }
 }
 
+////This custom widget(class) contain Scaffold.
 class Home extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        leading: Icon(Icons.pages,
+    return Scaffold( //With scaffold we can set what we want to display in our app.
+      backgroundColor: Colors.white, //This set the background color for our app.
+      appBar: AppBar( //AppBarr widget create a app bar.
+        backgroundColor: Colors.green, //Background color for app bar.
+        leading: Icon(Icons.pages, //with leading attribute we can set an icon in our app bar.
           color: Colors.green.shade900,
         ),
-        title: Text('Portfolio',
-        style: TextStyle(fontSize: 20,
+        title: Text('Portfolio', //In AppBar this title widget gives a title to our app.
+        style: TextStyle(fontSize: 20, //TextStyle configure text color, size, font weight, etc.
         color: Colors.green.shade900,
         fontWeight: FontWeight.w600,
         backgroundColor: Colors.green.shade500)
         ),
-        actions: [IconButton(onPressed: (){
-          ScaffoldMessenger.of(context).showSnackBar(
+        actions: [IconButton(onPressed: (){ //With this action attribute we can set the action area in our app bar. And the IconButton show an icon on the screen, by configuring this we can also add some functionality.
+          ScaffoldMessenger.of(context).showSnackBar( //this one will show a temporal message at the bottom of our screen.
               SnackBar(
                   content: Text("This is a portfolio app of Momin Hosan Emon",
                   textAlign: TextAlign.center,
@@ -42,7 +46,7 @@ class Home extends StatelessWidget{
                   )
                   ),
                 backgroundColor: Colors.green.shade200,
-                duration: Duration(microseconds: 200000),
+                duration: Duration(microseconds: 200000), //By setting duration we can set the time for SnackBar.
               )
           );
         }, icon: Icon(Icons.info,
@@ -51,11 +55,11 @@ class Home extends StatelessWidget{
          )
         ],
       ),
-      body: Column(
+      body: Column( //Column will place gui elements in vertically.
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+        children: [ //In children list we place our gui elements.
+          Row( //Row will place gui elements in horizontally.
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("  Momin Hosan Emon", style: TextStyle(
@@ -121,8 +125,8 @@ class HomeTwo extends StatelessWidget{
           ),
           actions: [IconButton(onPressed: (){
             //showAboutDialog(context: context);
-            showDialog(context: context, builder: (context) {
-              return AlertDialog(
+            showDialog(context: context, builder: (context) { //showDialog will show something like a confirmation message in our screen.
+              return AlertDialog( //With AlertDialog we can set a prebuilt dialogue.
                 backgroundColor: Colors.white,
                 title: Text("Info"),
                 content: Text("You have clicked info button."),
