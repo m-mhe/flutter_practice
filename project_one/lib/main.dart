@@ -1,190 +1,315 @@
-//import section
-import 'package:flutter/material.dart'; //Importing material design system.
+import "package:flutter/material.dart";
 
-//Code execution point.
 void main(){
   runApp(MyApp());
 }
 
-//This custom widget(class) contain material design system.
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( //We set our app configuration in here.
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "MMHE",
-      home: Home(),
+      title: 'Button Tester',
+      home: AppHomeBody(),
     );
   }
 }
 
-////This custom widget(class) contain Scaffold.
-class Home extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold( //With scaffold we can set what we want to display in our app.
-      backgroundColor: Colors.white, //This set the background color for our app.
-      appBar: AppBar( //AppBarr widget create a app bar.
-        backgroundColor: Colors.green, //Background color for app bar.
-        leading: Icon(Icons.pages, //with leading attribute we can set an icon in our app bar.
-          color: Colors.green.shade900,
-        ),
-        title: Text('Portfolio', //In AppBar this title widget gives a title to our app.
-        style: TextStyle(fontSize: 20, //TextStyle configure text color, size, font weight, etc.
-        color: Colors.green.shade900,
-        fontWeight: FontWeight.w600,
-        backgroundColor: Colors.green.shade500)
-        ),
-        actions: [IconButton(onPressed: (){ //With this action attribute we can set the action area in our app bar. And the IconButton show an icon on the screen, by configuring this we can also add some functionality.
-          ScaffoldMessenger.of(context).showSnackBar( //this one will show a temporal message at the bottom of our screen.
-              SnackBar(
-                  content: Text("This is a portfolio app of Momin Hosan Emon",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.green.shade900,
-                    fontWeight: FontWeight.w500
-                  )
-                  ),
-                backgroundColor: Colors.green.shade200,
-                duration: Duration(microseconds: 200000), //By setting duration we can set the time for SnackBar.
-              )
-          );
-        }, icon: Icon(Icons.info,
-          color: Colors.green.shade900
-          )
-         )
-        ],
-      ),
-      body: Column( //Column will place gui elements in vertically.
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [ //In children list we place our gui elements.
-          Row( //Row will place gui elements in horizontally.
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [Text("  Momin Hosan Emon", style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
-              color: Colors.green.shade900
-            ),
-            )
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text("  Coding for a better tomorrow. Let's innovate together!",)
-            ],
-          ),
-          Row(
-            children: [
-              Image.asset(
-                'image/dog.jpg',
-              width: 360,
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Image.network(
-                "https://www.worldatlas.com/r/w1200/upload/da/27/73/shutterstock-459943711.jpg",
-                width: 360,
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.android,
-              size: 83.09090909,
-                color: Colors.green.shade800,
-              )
-            ],
-          ),
-        ],
-      )
-    );
-  }
-}
-
-class HomeTwo extends StatelessWidget{
+class AppHomeBody extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          leading: Icon(Icons.pages,
-            color: Colors.green.shade900,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        leading: Icon(
+          Icons.check_circle,
+          size: 23,
+          color: Colors.white,
+          shadows: [
+            Shadow(
+              color: Colors.green.shade900,
+              blurRadius: 15.5
+            )
+          ],
+        ),
+        title: Text(
+          'Button Tester',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+              shadows: [
+              Shadow(
+              color: Colors.green.shade900,
+              blurRadius: 15.5
+            )
+          ],
           ),
-          title: Text('Portfolio',
-              style: TextStyle(fontSize: 20,
-                  color: Colors.green.shade900,
-                  fontWeight: FontWeight.w600,
-                  backgroundColor: Colors.green.shade500)
-          ),
-          actions: [IconButton(onPressed: (){
-            //showAboutDialog(context: context);
-            showDialog(context: context, builder: (context) { //showDialog will show something like a confirmation message in our screen.
-              return AlertDialog( //With AlertDialog we can set a prebuilt dialogue.
-                backgroundColor: Colors.white,
-                title: Text("Info"),
-                content: Text("You have clicked info button."),
-                actions: [IconButton(onPressed: (){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("You clicked a button!",
+        ),
+        actions: [
+          IconButton(onPressed: (){
+            showDialog(context: context, builder: (context){
+              return AlertDialog(
+                title: Text(
+                    "About",
+                  style: TextStyle(
+                    color: Colors.green[900]
+                  ),
+                ),
+                content: Text(
+                    "This is a test project for - buttons(ElevatedButton, IconButton, GestureDetector, InkWell, TextButton), Padding, TextField, Shadow and Container.",
+                  style: TextStyle(
+                    color: Colors.green.shade900
+                  ),
+                ),
+                actions: [
+                  InkWell(
+                    splashColor: Colors.green,
+                    radius : 5.2,
+                    borderRadius: BorderRadius.circular(7),
+                    onTap : (){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 1),
+                        backgroundColor: Colors.green,
+                          content: Text(
+                              "You tapped ok!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.green.shade900,
-                                fontWeight: FontWeight.w500
-                            )
-                        ),
-                        backgroundColor: Colors.green.shade200,
-                        duration: Duration(microseconds: 200000),
-                      )
-                  );
-                }, icon: Icon(Icons.surround_sound_outlined),
-                  color: Colors.green.shade900,)],
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400
+                            ),
+                          ),
+                      ),
+                      );
+                    },
+                    child: Text(
+                        "OK",
+                      style: TextStyle(
+                        color: Colors.green[900],
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  )
+                ],
               );
             });
-          }, icon: Icon(Icons.info),
-            color: Colors.green.shade900,)],
-        ),
-        body: Center(
-          child:
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("  Momin Hosan Emon", style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                  color: Colors.green.shade900
-              ),
-              ),
-              Text("  Coding for a better tomorrow. Let's innovate together!",),
-              Image.asset(
-                'image/dog.jpg',
-                width: 360,
-              ),
-              Image.network(
-                "https://www.worldatlas.com/r/w1200/upload/da/27/73/shutterstock-459943711.jpg",
-                width: 360,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          }, icon: Icon(
+              Icons.pages,
+            size: 23,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.green.shade900,
+                blurRadius: 15.5
+              )
+            ],
+          )
+          )
+        ],
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: Text(
+                    "This one is a ElevatedButton:",
+                    style: TextStyle(
+                        color: Colors.green[900]
+                    )
+                  )
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(15),
+                              bottomLeft: Radius.circular(15),
+                          ),
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.green.shade600
+                          )
+                        ),
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.green,
+                        //padding: EdgeInsets.symmetric(horizontal: 20)
+                      ),
+                      onPressed: (){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(seconds: 1),
+                            backgroundColor: Colors.green,
+                              content: Text(
+                                  "Elevated button was pressed!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400
+                                ),
+                              )
+                          )
+                        );
+                      },
+                      child: Text(
+                          "ElevatedButton",
+                        style: TextStyle(
+                        ),
+                      ),
+                    )
+                )
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
                 children: [
-                  Icon(Icons.android,
-                    size: 83.09090909,
-                    color: Colors.green.shade800,
+                  Text(
+                      "This one is a icon button: ",
+                    style: TextStyle(
+                      color: Colors.green[900]
+                    ),
+                  ),
+                  IconButton(
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15),
+                            bottomLeft: Radius.circular(15)
+                        ),
+                      )
+                    ),
+                      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 75),
+                      onPressed: (){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 1),
+                            backgroundColor: Colors.green,
+                            content: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                //Icon(Icons.mic_external_off),
+                                Text(
+                                    "IconButton was pressed!",
+                                  //textAlign: TextAlign.center,
+                                )
+                              ],
+                            )
+                        )
+                      );
+                  },
+                      icon: Icon(
+                      Icons.policy,
+                    color: Colors.green,
+                    )
                   )
                 ],
               ),
-            ],
-          ),
-        )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                    child: GestureDetector(
+                      onHorizontalDragEnd: (c){
+                        //String velocity = c.toString();
+                        //List<String> store = velocity.split("");
+                        //store.removeRange(0, 23);
+                        //print(store);
+                        //print(c.primaryVelocity);
+                        if ((c.primaryVelocity ?? 0) >= 1000 || (c.primaryVelocity ?? 0) <= -1000){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(microseconds: 600000),
+                              backgroundColor: Colors.green,
+                                content: Text(
+                                    "Great, your swiping velocity is ${(c.primaryVelocity??0).toStringAsFixed(2)}!",
+                                  textAlign: TextAlign.center,
+                                )
+                            )
+                          );
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                              "Swipe right or left, with velocity!",
+                            style: TextStyle(
+                              color: Colors.green[900]
+                            )
+                          ),
+                          Text(
+                              "If you score is higher than ±1000, than you will see",
+                              style: TextStyle(
+                                  color: Colors.green[900]
+                              )
+                          ),
+                          Text(
+                              "a SnackBar massage.",
+                              style: TextStyle(
+                                  color: Colors.green[900]
+                              )
+                          )
+                        ],
+                      ),
+                    )
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.green[100],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(25),
+                            bottomLeft: Radius.circular(25)
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 85,
+                        vertical: 200
+                      )
+                    ),
+                    onPressed: (){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 1),
+                          backgroundColor: Colors.green,
+                          content: Text(
+                            "Text button was pressed!",
+                            textAlign: TextAlign.center,
+                          ),
+                        )
+                      );
+                    },
+                    //child: Image.asset("image/dog.jpg"),
+                    child: Text(
+                        "This one is a TextButton",
+                      style: TextStyle(
+                        color: Colors.green[900]
+                      ),
+                    ),
+                  )
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
-
