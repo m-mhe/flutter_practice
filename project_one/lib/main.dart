@@ -226,10 +226,11 @@ class AppHomeBody extends StatelessWidget{
                         //store.removeRange(0, 23);
                         //print(store);
                         //print(c.primaryVelocity);
+                        //print(c.velocity);
                         if ((c.primaryVelocity ?? 0) >= 1000 || (c.primaryVelocity ?? 0) <= -1000){
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              duration: Duration(microseconds: 600000),
+                              duration: Duration(seconds: 1),
                               backgroundColor: Colors.green,
                                 content: Text(
                                     "Great, your swiping velocity is ${(c.primaryVelocity??0).toStringAsFixed(2)}!",
@@ -248,7 +249,7 @@ class AppHomeBody extends StatelessWidget{
                             )
                           ),
                           Text(
-                              "If you score is higher than ±1000, than you will see",
+                              "If you score is higher than ±1000, then you will see",
                               style: TextStyle(
                                   color: Colors.green[900]
                               )
@@ -269,7 +270,7 @@ class AppHomeBody extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green[100],
@@ -280,8 +281,8 @@ class AppHomeBody extends StatelessWidget{
                         ),
                       ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: 85,
-                        vertical: 200
+                          horizontal: 30,
+                        vertical: 5
                       )
                     ),
                     onPressed: (){
@@ -306,6 +307,108 @@ class AppHomeBody extends StatelessWidget{
                   )
                 )
               ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                style: TextStyle(
+                  backgroundColor: Colors.white,
+                  color: Colors.green[800],
+                  fontWeight: FontWeight.w500
+                ),
+                onChanged: (value){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: Duration(microseconds: 400000),
+                      backgroundColor: Colors.green,
+                      content: Text(
+                        "You are typing...",
+                        textAlign: TextAlign.center,
+                      )
+                  ));
+                  print(value);
+                },
+                maxLength: 28,
+                decoration: InputDecoration(
+                  //prefix: Text("Ok now "),
+                  prefixIcon: Icon(
+                    Icons.add,
+                    size: 20,
+                    color: Colors.green[800],
+                  ),
+                  suffixIcon: Icon(
+                      Icons.remove_red_eye,
+                    color: Colors.green[800],
+                  ),
+                  fillColor: Colors.green.withOpacity(0.07),
+                  filled: true,
+                  labelText: "Type anything...",
+                  labelStyle: TextStyle(
+                    color: Colors.green[300]
+                  ),
+                  hintText: "Just type...",
+                  hintStyle: TextStyle(
+                    color: Colors.green[300],
+                    fontWeight: FontWeight.normal
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 4
+                    ),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(25),
+                        bottomLeft: Radius.circular(25)
+                    )
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2,
+                        color: Colors.green.shade800
+                      ),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25)
+                      )
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 100,
+              width: 150,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.shade800.withOpacity(0.7),
+                    spreadRadius: 5,
+                    blurRadius: 8,
+                    offset: Offset(-4,4)
+                  )
+                ],
+                color: Colors.green,
+                image: DecorationImage(
+                  image: AssetImage(
+                      "image/dog.jpg"
+                  ),
+                  fit: BoxFit.cover
+                ),
+              ),
+              child: Text(
+                "This is a Container()",
+                style: TextStyle(
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(1),
+                      blurRadius: 15.5,
+                      offset: Offset(0,0),
+                    )
+                  ],
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500
+                ),
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),
