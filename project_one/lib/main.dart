@@ -1,25 +1,31 @@
+//Import section
 import "package:flutter/material.dart";
 
+//Code execution block
 void main(){
   runApp(MyApp());
 }
 
+//setting up material design system
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Button Tester',
+      //Calling that class, that contain Scaffold widget
       home: AppHomeBody(),
     );
   }
 }
 
+//With Scaffold widget we set what we want to show in our app screen
 class AppHomeBody extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      //In appBar we set our app bar, with the help of AppBar widget(In flutter generally a Widget is a class. It have render capability.)
       appBar: AppBar(
         backgroundColor: Colors.green,
         leading: Icon(
@@ -47,7 +53,7 @@ class AppHomeBody extends StatelessWidget{
           ),
         ),
         actions: [
-          IconButton(onPressed: (){
+          IconButton(onPressed: (){ //This is an icon button.
             showDialog(context: context, builder: (context){
               return AlertDialog(
                 title: Text(
@@ -63,12 +69,12 @@ class AppHomeBody extends StatelessWidget{
                   ),
                 ),
                 actions: [
-                  InkWell(
+                  InkWell( //This is an InkWell button.
                     splashColor: Colors.green,
                     radius : 5.2,
                     borderRadius: BorderRadius.circular(7),
                     onTap : (){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar( //This is how we can make snack bar message.
                         duration: Duration(seconds: 1),
                         backgroundColor: Colors.green,
                           content: Text(
@@ -123,16 +129,16 @@ class AppHomeBody extends StatelessWidget{
                     )
                   )
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
-                    child: ElevatedButton(
+                Padding( //This widget will apply padding to it's child.
+                  padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0), //How we want our padding.
+                    child: ElevatedButton( //This is an ElevatedButton.
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(15),
                               bottomLeft: Radius.circular(15),
                           ),
-                          side: BorderSide(
+                          side: BorderSide( //It will add border to our button.
                             width: 1,
                             color: Colors.green.shade600
                           )
@@ -142,9 +148,9 @@ class AppHomeBody extends StatelessWidget{
                         //padding: EdgeInsets.symmetric(horizontal: 20)
                       ),
                       onPressed: (){
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar( //Snack bar message.
                           SnackBar(
-                            duration: Duration(seconds: 1),
+                            duration: Duration(seconds: 1), //Setting up the duration.
                             backgroundColor: Colors.green,
                               content: Text(
                                   "Elevated button was pressed!",
@@ -158,7 +164,7 @@ class AppHomeBody extends StatelessWidget{
                           )
                         );
                       },
-                      child: Text(
+                      child: Text( //In chid we place a widget. And that widget will show in button surface.
                           "ElevatedButton",
                         style: TextStyle(
                         ),
@@ -167,7 +173,7 @@ class AppHomeBody extends StatelessWidget{
                 )
               ],
             ),
-            Padding(
+            Padding( //Adding some padding.
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
                 children: [
@@ -219,7 +225,7 @@ class AppHomeBody extends StatelessWidget{
               children: [
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                    child: GestureDetector(
+                    child: GestureDetector( //This is a Gesture Detector. With this we can detect gesture from the app user.
                       onHorizontalDragEnd: (c){
                         //String velocity = c.toString();
                         //List<String> store = velocity.split("");
@@ -227,10 +233,10 @@ class AppHomeBody extends StatelessWidget{
                         //print(store);
                         //print(c.primaryVelocity);
                         //print(c.velocity);
-                        if ((c.primaryVelocity ?? 0) >= 1000 || (c.primaryVelocity ?? 0) <= -1000){
+                        if ((c.primaryVelocity ?? 0) >= 1000 || (c.primaryVelocity ?? 0) <= -1000){ //Adding some logic to show a reactive snack bar message.
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              duration: Duration(seconds: 1),
+                              duration: Duration(seconds: 1), //Duration.
                               backgroundColor: Colors.green,
                                 content: Text(
                                     "Great, your swiping velocity is ${(c.primaryVelocity??0).toStringAsFixed(2)}!",
@@ -271,7 +277,7 @@ class AppHomeBody extends StatelessWidget{
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                  child: TextButton(
+                  child: TextButton( //This is a TextButton. We can add text or any widget to it's child.
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.green[100],
                       shape: RoundedRectangleBorder(
@@ -285,7 +291,7 @@ class AppHomeBody extends StatelessWidget{
                         vertical: 5
                       )
                     ),
-                    onPressed: (){
+                    onPressed: (){ //It set what will happen if we press this button.
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: Duration(seconds: 1),
@@ -310,7 +316,7 @@ class AppHomeBody extends StatelessWidget{
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: TextField(
+              child: TextField( //With the help of this widget we can display a functional place to write some text.
                 style: TextStyle(
                   backgroundColor: Colors.white,
                   color: Colors.green[800],
@@ -372,7 +378,7 @@ class AppHomeBody extends StatelessWidget{
                 ),
               ),
             ),
-            Container(
+            Container( //This is a container, it means this can contain anything.
               height: 100,
               width: 150,
               alignment: Alignment.center,
