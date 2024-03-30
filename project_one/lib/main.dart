@@ -1,28 +1,33 @@
+//Import block:
 import "package:flutter/material.dart";
 
+//Code execution point:
 void main(){
   runApp(MyApp());
 }
 
+//Custom widget (class), it contain configurations of MaterialApp() design system:
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       //To hide the debug banner:
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //Disabling the debug banner.
       title: "List & Grid",
       home: HomeScreen(),
     );
   }
 }
 
+//Custom widget (class), it contain Scaffold() widget:
 class HomeScreen extends StatelessWidget{
   List<String> names = ["Emon", "Rahat", "Kibria", "Salam", "Sany", "Lotfour", "billal", "ok", "last", "and", "tHis", "ARe", "some", "extra"];
   @override
   Widget build(BuildContext context) {
+    //Scaffold() occupy the whole app screen, to show GUI we write all necessary widgets here.
     return Scaffold(
-      backgroundColor: Colors.lightBlue[100],
-      appBar: AppBar(
+      backgroundColor: Colors.lightBlue[100], //It will set the background color.
+      appBar: AppBar( //Through AppBar() we can- write app title, set icon for leading area, set button for actions area, etc.
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         leading: ListView(
@@ -40,7 +45,7 @@ class HomeScreen extends StatelessWidget{
         actions: [
           IconButton(onPressed: (){
             showDialog(context: context, builder: (context){
-              return AlertDialog(
+              return AlertDialog( //Through this we can show a alert dialogue.
                 title: Text(
                     "About",
                   style: TextStyle(
@@ -48,14 +53,14 @@ class HomeScreen extends StatelessWidget{
                   ),
                 ),
                 content: Text(
-                    "This demo app contain: list and grid. The ListView() widget is for showing a list, and the GridView is for showing a grid.",
+                    "This demo app contain: list and grid. The ListView() widget is for showing a list, and the GridView() is for showing a grid.",
                   style: TextStyle(
                     color: Colors.blue[800]
                   ),
                 ),
               );
             });
-          }, icon: Icon(Icons.help))
+          }, icon: Icon(Icons.help)) //This icon will be shown in the app UI.
         ],
       ),
       /*
@@ -503,44 +508,44 @@ class HomeScreen extends StatelessWidget{
         },
       ),*/
       //This one is a dynamic list & grid:
-      body: SingleChildScrollView(
-        child: Column(
+      body: SingleChildScrollView( //It will add scroll feature.
+        child: Column( //Column can contain multiple content vertically.
           children: [
-            ListView.builder(
-              shrinkWrap: true,
-              primary: false,
-              itemCount: names.length,
-                itemBuilder: (context, index){
+            ListView.builder( //ListView.builder() will build a list dynamically.
+              shrinkWrap: true, //It will set a necessary space for this list layout.
+              primary: false, //This one is for turning off the default scroll feature.
+              itemCount: names.length, //Required for ListView.builder() widget.
+                itemBuilder: (context, index){ //Required for ListView.builder() widget.
                   return Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: Text("$index, ${names[index].toUpperCase()}"),
                   );
                 }
             ),
-            ListView.separated(
-              shrinkWrap: true,
-              primary: false,
-              itemCount: names.length,
-              itemBuilder: (context, i){
+            ListView.separated( //It's almost same as the ListView.builder(), but it will take a function through "separatorBuilder:" parameter to add separation between two list items.
+              shrinkWrap: true, //It will set a necessary space for this list layout.
+              primary: false, //This one is for turning off the default scroll feature.
+              itemCount: names.length, //This one is required for the ListView.separated()
+              itemBuilder: (context, i){ //This one is required for the ListView.separated()
                 return Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Text("${i+1}, ${names[i].toUpperCase()}",
                   textAlign: TextAlign.end,),
                 );
               },
-              separatorBuilder: (context, index){
-                return Divider();
+              separatorBuilder: (context, index){ //This one is required for the ListView.separated()
+                return Divider(); //It is a horizontal line as the separation.
               },
             ),
-            GridView.builder(
-              shrinkWrap: true,
-              primary: false,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            GridView.builder( //GridView.builder() can build a grid layout dynamically.
+              shrinkWrap: true, //It will set a necessary space for this grid layout.
+              primary: false, //This one is for turning off the default scroll feature.
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount( //This one is Required to GridView.builder() widget.
                 crossAxisCount: 4,
                 childAspectRatio: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10
               ),
-              itemCount: names.length,
-              itemBuilder: (context, serialNumber){
+              itemCount: names.length, //This one is Required to function GridView.builder() widget.
+              itemBuilder: (context, serialNumber){ //This one is Required to function GridView.builder() widget.
                 return Text(
                   "${serialNumber + 1}. ${names[serialNumber].toUpperCase()}",
                   style: TextStyle(color: Colors.black),
