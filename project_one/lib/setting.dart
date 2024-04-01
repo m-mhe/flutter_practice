@@ -1,3 +1,4 @@
+//Import section:
 import 'package:flutter/material.dart';
 import 'package:project_one/home.dart';
 import 'package:project_one/info.dart';
@@ -27,7 +28,7 @@ class Setting extends StatelessWidget{
                 ),
                 onPressed: (){
                   //Navigator.pop(context);
-                  Navigator.pushAndRemoveUntil(context,
+                  Navigator.pushAndRemoveUntil(context, //pushAndRemoveUntil: will push the HomeRoute() after taking out all pages from the stack.
                       MaterialPageRoute(builder: (context) => const HomeRoute()), (route) => false);
                 },
                 child: const Text("Home"),
@@ -39,7 +40,7 @@ class Setting extends StatelessWidget{
                     padding: const EdgeInsets.symmetric(horizontal: 35)
                 ),
                 onPressed: (){
-                  Navigator.pushReplacement(context,
+                  Navigator.pushReplacement(context, //Replacing the current page with Info().
                     MaterialPageRoute(builder: (context){
                       return const Info();
                     })
