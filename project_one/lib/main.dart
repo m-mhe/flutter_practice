@@ -1,14 +1,16 @@
+//To format code - ctrl + alt + L
+
 //Import section:
 import 'package:flutter/material.dart';
 import 'package:project_one/home.dart';
 
 //Code execution point:
-void main(){
+void main() {
   runApp(const MyApp());
 }
 
 //This custom widget contain MaterialApp design system:
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
