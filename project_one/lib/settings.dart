@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//Import section:
 import 'package:flutter/material.dart';
 import 'package:project_one/main.dart';
 
@@ -9,7 +9,7 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SETTING"),
+        title: const Text("SETTING"),
       ),
       body: Center(
           child: Column(
@@ -19,22 +19,22 @@ class Setting extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.home)),
+              icon: const Icon(Icons.home)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("HOME")),
+              child: const Text("HOME")),
           ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Home")),
+              child: const Text("Home")),
           InkWell(
               onDoubleTap: () {
                 Navigator.pop(context);
               },
-              child: Text("Double Tap")),
+              child: const Text("Double Tap")),
           GestureDetector(
             onHorizontalDragEnd: (c) {
               if ((c.primaryVelocity ?? 0) < 0) {
@@ -44,7 +44,7 @@ class Setting extends StatelessWidget {
                 }), (route) => false);
               }
             },
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Slide"),
