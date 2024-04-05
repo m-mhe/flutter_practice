@@ -15,6 +15,12 @@ class _ByPointTwoFiveState extends State<ByPointTwoFive> {
   double value = 0;
 
   @override
+  void initState() {
+    value = .25;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -106,8 +112,9 @@ class _ByPointTwoFiveState extends State<ByPointTwoFive> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              value = value - 0.25;
-              setState(() {});
+              setState(() {
+                value = value - 0.25;
+              });
             },
             child: const Icon(Icons.exposure_minus_1),
           ),
@@ -116,8 +123,7 @@ class _ByPointTwoFiveState extends State<ByPointTwoFive> {
           ),
           FloatingActionButton(
             onPressed: () {
-              value = value + 0.25;
-              setState(() {});
+              setState(() => value = value + 0.25);
             },
             child: const Icon(Icons.add),
           )

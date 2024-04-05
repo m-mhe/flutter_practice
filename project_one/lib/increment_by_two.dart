@@ -15,6 +15,11 @@ class ByTwo extends StatefulWidget {
 
 class _ByTwoState extends State<ByTwo> {
   int value = 0;
+  @override
+  void initState() {
+    value = 2;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

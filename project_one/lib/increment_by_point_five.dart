@@ -15,6 +15,11 @@ class ByPointFive extends StatefulWidget {
 
 class _ByPointFiveState extends State<ByPointFive> {
   double value = 0;
+  @override
+  void initState() {
+    value = .5;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

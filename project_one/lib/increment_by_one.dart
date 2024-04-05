@@ -4,15 +4,24 @@ import 'increment_by_two.dart';
 import 'increment_by_point_five.dart';
 import 'increment_by_point_two_five.dart';
 
+//This one is a StatefulWidget, it can change it's state when setStare((){}) is called.
 class ByOne extends StatefulWidget {
+  //The first part of StatefulWidget.
   const ByOne({super.key});
 
   @override
-  State<ByOne> createState() => _ByOneState();
+  State<ByOne> createState() =>
+      _ByOneState(); //calling the second part of StatefulWidget.
 }
 
 class _ByOneState extends State<ByOne> {
-  int value = 0;
+  //The second part of StatefulWidget, it's known as "State<>".
+  int value = 0; //A variable.
+  @override
+  void initState() {
+    value = 1;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +125,7 @@ class _ByOneState extends State<ByOne> {
           ),
           FloatingActionButton(
             onPressed: () {
-              value++;
+              value++; //Changing the variable when the button is clicked.
               setState(() {});
             },
             child: const Icon(Icons.add),
@@ -124,5 +133,17 @@ class _ByOneState extends State<ByOne> {
         ],
       ),
     );
+  }
+
+  @override
+  void deactivate() {
+    print("Deactivated..");
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    print("Disposed..");
+    super.dispose();
   }
 }
