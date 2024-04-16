@@ -1,8 +1,8 @@
-//Import section:
-import 'package:flutter/material.dart';
-import 'package:project_one/home.dart';
+//Media query, wrap, layout builder, orientation builder.
 
-//Code execution point:
+//Import section
+import 'package:flutter/material.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -12,33 +12,173 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //In here we keep all MaterialApp design configuration.
-      theme: ThemeData(
-          //Setting up a theme for the whole app.
-          appBarTheme: const AppBarTheme(
-            //A theme for AppBar.
-            backgroundColor: Colors.orange,
-            foregroundColor: Colors.white,
-            titleTextStyle:
-                TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
-            centerTitle: true,
-          ),
-          drawerTheme: DrawerThemeData(
-            //A theme for drawer.
-            width: 250,
-            backgroundColor: Colors.orange[200],
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-              //A theme for floating action button.
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
-              splashColor: Color(0xFFFF6126)),
-          dividerTheme: const DividerThemeData(color: Color(0xFFD67D3E)),
-          //A theme for Divider between list items.
-          iconTheme: const IconThemeData(color: Colors.orange, size: 150)),
-      title: "Counter",
-      home: const Home(), //Calling custom widget, that contain Scaffold().
+    return const MaterialApp(
+      title: 'Responsive',
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Responsiveness")),
+
+      //This part is about media query
+      body: /*Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("This is ${MediaQuery.of(context).size}"),
+            Text("This is height - ${MediaQuery.of(context).size.height}"),
+            Text(
+                "This is aspectRatio - ${MediaQuery.of(context).size.aspectRatio}"),
+            Text(
+                "This is width - ${MediaQuery.of(context).size.width.toString()}"),
+            Text("This is reverse ${MediaQuery.of(context).size.flipped}"),
+            Text(
+                "Is size finite - ${MediaQuery.of(context).size.isFinite.toString()}"),
+            Text(
+                "The longest size is - ${MediaQuery.of(context).size.shortestSide.toString()}")
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("${MediaQuery.orientationOf(context)}"),
+            Text("${MediaQuery.devicePixelRatioOf(context)}"),
+            Text("${MediaQuery.displayFeaturesOf(context)}"),
+            Text("This is ${MediaQuery.sizeOf(context)}")
+          ],
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            Text("${MediaQuery.orientationOf(context)}"),
+            Text("${MediaQuery.devicePixelRatioOf(context)}"),
+            Text("${MediaQuery.displayFeaturesOf(context)}"),
+            Text("This is ${MediaQuery.sizeOf(context)}")
+          ],
+        ),
+      ),*/
+      /*LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth < 460) {
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.red,
+          );
+        }
+        else if(constraints.maxWidth < 560){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }else if(constraints.maxWidth < 660){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.yellow,
+          );
+        }else if(constraints.maxWidth < 760){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.red,
+          );
+        }
+        else if(constraints.maxWidth < 860){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }
+        else if(constraints.maxWidth < 960){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.yellow,
+          );
+        }
+        else if(constraints.maxWidth < 1060){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.red,
+          );
+        }
+        else if(constraints.maxWidth < 1160){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }else if(constraints.maxWidth < 1260){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.yellow,
+          );
+        }else if(constraints.maxWidth < 1360){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.red,
+          );
+        }else if(constraints.maxWidth < 1460){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }else if(constraints.maxWidth < 1560){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.yellow,
+          );
+        }else if(constraints.maxWidth < 1660){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.red,
+          );
+        }else if(constraints.maxWidth < 1760){
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.green,
+          );
+        }
+        else{
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: Colors.yellow,
+          );
+        }
+      },
+
+      )*/
+      OrientationBuilder(builder: (context, orient){
+        if (orient == Orientation.landscape){
+          return Container(
+              height: double.infinity,
+                width: double.infinity,
+                color: Colors.black,
+                child: const Center(child: Text("This phone is now horizontal",style: TextStyle(color: Colors.white),)))
+          ;
+        }else{
+          return const Center(
+            child: Text("This phone is now vertical"),
+          );
+        }
+      })
     );
   }
 }
