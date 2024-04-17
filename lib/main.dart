@@ -26,9 +26,33 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Responsiveness")),
-
-      //This part is about media query
-      body: /*Center(
+      body: //With OrientationBuilder() we can also change our UI based on screen orientation:
+          OrientationBuilder(
+        builder: (context, orient) {
+          if (orient == Orientation.landscape) {
+            return Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Colors.black,
+              child: const Center(
+                child: Text(
+                  "This phone is now horizontal",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Text("This phone is now vertical"),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+//This part is about media query:
+/*Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -45,6 +69,7 @@ class Home extends StatelessWidget {
                 "The longest size is - ${MediaQuery.of(context).size.shortestSide.toString()}")
           ],
         ),
+        //Or we can write like this
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -54,6 +79,7 @@ class Home extends StatelessWidget {
             Text("This is ${MediaQuery.sizeOf(context)}")
           ],
         ),
+        //Wrap is almost same as Row. The key different is - if content overflow by some pixels {for using the Row() widget}, then wrap will go to the next line.
         child: Wrap(
           alignment: WrapAlignment.center,
           children: [
@@ -63,8 +89,9 @@ class Home extends StatelessWidget {
             Text("This is ${MediaQuery.sizeOf(context)}")
           ],
         ),
-      ),*/
-      /*LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      ),
+      //With LayoutBuilder() we can change UI based on our screen size:
+      LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth < 460) {
           return Container(
             height: double.infinity,
@@ -165,20 +192,3 @@ class Home extends StatelessWidget {
       },
 
       )*/
-      OrientationBuilder(builder: (context, orient){
-        if (orient == Orientation.landscape){
-          return Container(
-              height: double.infinity,
-                width: double.infinity,
-                color: Colors.black,
-                child: const Center(child: Text("This phone is now horizontal",style: TextStyle(color: Colors.white),)))
-          ;
-        }else{
-          return const Center(
-            child: Text("This phone is now vertical"),
-          );
-        }
-      })
-    );
-  }
-}
