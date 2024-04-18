@@ -1,6 +1,6 @@
-//Media query, wrap, layout builder, orientation builder.
+//Aspect ratio() || Flexible() || Expanded() || FractionallySizedBox() - This are all widgets (In flutter a framework class is called widget).
 
-//Import section
+//Import section:
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,183 +12,222 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Responsive',
-      home: Home(),
+    // TODO: implement build
+    return MaterialApp(
+      title: "Class Nine",
+      home: StartPage(),
+      theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 1.5)))),
     );
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class StartPage extends StatelessWidget {
+  //Variables
+  final dialogShow = TextEditingController();
+  final String dialogMessage =
+      "This is a practice app. It contain practice code for: Aspect ratio() || Flexible() || Expanded() || FractionallySizedBox() - This are all widgets (In flutter a framework class is called widget).";
+  Map<String, String> itemName = {
+    'Joy': 'yellow',
+    'devid': 'red',
+    'lecon': 'orange',
+    'arof': 'blue',
+    'jemes potter': 'purple',
+    'gj': 'yellow',
+    'devsfid': 'red',
+    'lesdfcon': 'orange',
+    'ardof': 'blue',
+    'jemegs potter': 'purple',
+    'fJoy': 'yellow',
+    'devgid': 'red',
+    'lelcon': 'orange',
+    'argof': 'blue',
+    'jemaes potter': 'purple',
+    'Jojy': 'yellow',
+    'desvid': 'red',
+    'lecgson': 'orange',
+    'aroff': 'blue',
+    'jemsfes potter': 'purple',
+    'Joay': 'yellow',
+    'devfaid': 'red',
+    'lefcon': 'orange',
+    'arqof': 'blue',
+    'jemges potter': 'purple',
+    'Jaoy': 'yellow',
+    'defvid': 'red',
+    'lecaon': 'orange',
+    'arodf': 'blue',
+    'jemes pofgtter': 'purple',
+  };
+
+  StartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: const Text("Responsiveness")),
-      body: //With OrientationBuilder() we can also change our UI based on screen orientation:
-          OrientationBuilder(
-        builder: (context, orient) {
-          if (orient == Orientation.landscape) {
-            return Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Colors.black,
-              child: const Center(
-                child: Text(
-                  "This phone is now horizontal",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            );
-          } else {
-            return const Center(
-              child: Text("This phone is now vertical"),
-            );
-          }
-        },
+      appBar: AppBar(
+        leading: Icon(Icons.class_outlined),
+        title: Text("Class Nine"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                dialogShow.text = dialogMessage;
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("What is this about?"),
+                        content: TextField(
+                          controller: dialogShow,
+                          readOnly: true,
+                          maxLines: 8,
+                          //decoration: InputDecoration(),
+                        ),
+                      );
+                    });
+              },
+              icon: Icon(Icons.help_outline))
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 5,
+          ),
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 6,
+              childAspectRatio: 1,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+            itemCount: itemName.length,
+            itemBuilder: (context, i) {
+              switch (itemName.values.toList()[i]) {
+                case 'yellow':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.yellow,
+                      child: Text(itemName.values.toList()[i]),
+                    );
+                  }
+                case 'red':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.red,
+                      child: Text(itemName.values.toList()[i]),
+                    );
+                  }
+                case 'orange':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.orange,
+                      child: Text(itemName.values.toList()[i]),
+                    );
+                  }
+                case 'blue':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.blue,
+                      child: Text(itemName.values.toList()[i]),
+                    );
+                  }
+                case 'purple':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.purple,
+                      child: Text(itemName.values.toList()[i]),
+                    );
+                  }
+                default:
+                  {
+                    return Text(
+                      "error",
+                      textAlign: TextAlign.center,
+                    );
+                  }
+              }
+            },
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 6,
+              childAspectRatio: 1,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+            itemCount: itemName.length,
+            itemBuilder: (context, i) {
+              switch (itemName.values.toList()[i]) {
+                case 'yellow':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.yellow,
+                      child: Text(itemName.keys.toList()[i]),
+                    );
+                  }
+                case 'red':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.red,
+                      child: Text(itemName.keys.toList()[i]),
+                    );
+                  }
+                case 'orange':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.orange,
+                      child: Text(itemName.keys.toList()[i]),
+                    );
+                  }
+                case 'blue':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.blue,
+                      child: Text(itemName.keys.toList()[i]),
+                    );
+                  }
+                case 'purple':
+                  {
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.purple,
+                      child: Text(itemName.keys.toList()[i]),
+                    );
+                  }
+                default:
+                  {
+                    return Text(
+                      "error",
+                      textAlign: TextAlign.center,
+                    );
+                  }
+              }
+            },
+          ),
+        ],
       ),
     );
   }
 }
-//This part is about media query:
-/*Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("This is ${MediaQuery.of(context).size}"),
-            Text("This is height - ${MediaQuery.of(context).size.height}"),
-            Text(
-                "This is aspectRatio - ${MediaQuery.of(context).size.aspectRatio}"),
-            Text(
-                "This is width - ${MediaQuery.of(context).size.width.toString()}"),
-            Text("This is reverse ${MediaQuery.of(context).size.flipped}"),
-            Text(
-                "Is size finite - ${MediaQuery.of(context).size.isFinite.toString()}"),
-            Text(
-                "The longest size is - ${MediaQuery.of(context).size.shortestSide.toString()}")
-          ],
-        ),
-        //Or we can write like this
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("${MediaQuery.orientationOf(context)}"),
-            Text("${MediaQuery.devicePixelRatioOf(context)}"),
-            Text("${MediaQuery.displayFeaturesOf(context)}"),
-            Text("This is ${MediaQuery.sizeOf(context)}")
-          ],
-        ),
-        //Wrap is almost same as Row. The key different is - if content overflow by some pixels {for using the Row() widget}, then wrap will go to the next line.
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          children: [
-            Text("${MediaQuery.orientationOf(context)}"),
-            Text("${MediaQuery.devicePixelRatioOf(context)}"),
-            Text("${MediaQuery.displayFeaturesOf(context)}"),
-            Text("This is ${MediaQuery.sizeOf(context)}")
-          ],
-        ),
-      ),
-      //With LayoutBuilder() we can change UI based on our screen size:
-      LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth < 460) {
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }
-        else if(constraints.maxWidth < 560){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.green,
-          );
-        }else if(constraints.maxWidth < 660){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.yellow,
-          );
-        }else if(constraints.maxWidth < 760){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }
-        else if(constraints.maxWidth < 860){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.green,
-          );
-        }
-        else if(constraints.maxWidth < 960){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.yellow,
-          );
-        }
-        else if(constraints.maxWidth < 1060){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }
-        else if(constraints.maxWidth < 1160){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.green,
-          );
-        }else if(constraints.maxWidth < 1260){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.yellow,
-          );
-        }else if(constraints.maxWidth < 1360){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }else if(constraints.maxWidth < 1460){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.green,
-          );
-        }else if(constraints.maxWidth < 1560){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.yellow,
-          );
-        }else if(constraints.maxWidth < 1660){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red,
-          );
-        }else if(constraints.maxWidth < 1760){
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.green,
-          );
-        }
-        else{
-          return Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.yellow,
-          );
-        }
-      },
-
-      )*/
