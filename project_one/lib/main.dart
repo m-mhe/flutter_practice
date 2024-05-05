@@ -1,88 +1,254 @@
+/*
+basic:
 import 'package:flutter/material.dart';
 
-//The code execution point
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-//If we want to use a class as a widget, then we have to inherit (extends) the StatelessWidget class.
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        //MaterialApp is a design system.
-        title: 'Project One',
-        home: HomeBarIcon());
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => const HomeScreen(),
+        '/settings' : (context) => const SettingsScreen(),
+        '/profile' : (context) => const ProfileScreen(),
+      },
+    );
   }
 }
 
-class HomeBarText extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Scaffold will occupy the whole screen of our app.
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
       body: Center(
-        //With the help of our Text() Widget we can display text to our app screen.
-        child: Text(
-          "Porem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          textAlign: TextAlign.center,
-          maxLines: 3,
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w300,
-            backgroundColor: Colors.green,
-            color: Colors.white,
-            overflow: TextOverflow.ellipsis,
-          ),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+              child: const Text('Settings'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/profile',
+                    arguments: 45);
+              },
+              child: const Text('Profile'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class HomeBarIcon extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    //With this Icon() widget we can display icons to our app screen, in flutter we can access many pre-build icons with the help of [icons.].
+    final args =
+        ModalRoute.of(context)?.settings.arguments as int;
+    print(args);
+
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
       body: Center(
-        child: Icon(
-          Icons.android,
-          size: 50,
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
+              child: const Text('Home'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Settings'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class HomeBarImageNetwork extends StatelessWidget {
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //In here we are accessing a picture from internet.
-      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
       body: Center(
-        child: Image.network(
-          'https://www.worldatlas.com/r/w1200/upload/da/27/73/shutterstock-459943711.jpg',
-          height: 150,
-          width: 330,
-          fit: BoxFit.cover,
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Profile'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Home'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+*/
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(initialRoute: '/', onGenerateRoute: _generateRoute);
+  }
+
+  MaterialPageRoute? _generateRoute(RouteSettings settings) {
+    Widget? widget;
+    switch (settings.name) {
+      case HomeScreen.routeName:
+        widget = const HomeScreen();
+        break;
+      case SettingsScreen.routeName:
+        widget = const SettingsScreen();
+        break;
+      case ProfileScreen.routeName:
+        String userName = settings.arguments as String;
+        widget = ProfileScreen(userName: userName);
+        break;
+    }
+
+    if (widget != null) {
+      return MaterialPageRoute(builder: (context) => widget!);
+    }
+    return null;
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  static const String routeName = '/';
+
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SettingsScreen.routeName);
+              },
+              child: const Text('Settings'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, ProfileScreen.routeName,
+                    arguments: 'Rafat J');
+              },
+              child: const Text('Profile'),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class HomeBarImageLocal extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
+  static const String routeName = '/profile';
+
+  const ProfileScreen({super.key, required this.userName});
+
+  final String userName;
+
+  @override
+  Widget build(BuildContext context) {
+    print(userName);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
+              },
+              child: const Text('Home'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Settings'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  static const String routeName = '/settings';
+
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //We are accessing picture from a local file.
-      backgroundColor: Colors.orange[200],
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
       body: Center(
-        child: Image.asset('image/dog.jpg', width: 330),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Profile'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Home'),
+            ),
+          ],
+        ),
       ),
     );
   }
