@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Store',
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       theme: _lightTheme(),
       darkTheme: _darkTheme(),
       home: ProductDisplay(),
@@ -29,6 +29,44 @@ class MyApp extends StatelessWidget {
         iconColor: Colors.white,
         dense: false,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(color: Colors.black),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.red,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.red,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.red,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.red,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            width: 2,
+            color: Colors.red,
+          ),
+        ),
+      ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
@@ -38,7 +76,6 @@ class MyApp extends StatelessWidget {
 
   ThemeData _lightTheme() {
     return ThemeData(
-      brightness: Brightness.light,
       appBarTheme: const AppBarTheme(
         titleTextStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         backgroundColor: Colors.red,
