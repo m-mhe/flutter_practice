@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:project_one/add_item.dart';
 import 'package:project_one/update_items.dart';
 
-class ProductDisplay extends StatelessWidget {
-  ProductDisplay({super.key});
+class ProductDisplay extends StatefulWidget {
+  const ProductDisplay({super.key});
 
+  @override
+  State<ProductDisplay> createState() => _ProductDisplayState();
+}
+
+class _ProductDisplayState extends State<ProductDisplay> {
   final Map<String, String> productInfo = {
     'Lenovo Laptop': 'image/o.jpg',
     'Apple Watch': 'image/t.jpg',
@@ -24,6 +29,7 @@ class ProductDisplay extends StatelessWidget {
     'Black Hype': 'image/16.jpg',
     'Power Blast': 'image/17.jpg',
   };
+
   final List<String> colorOfItems = [
     'lite Silver',
     'blackK',
