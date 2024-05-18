@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:project_one/data_model.dart';
 import 'package:project_one/add_item.dart';
 import 'package:project_one/update_items.dart';
 
@@ -10,82 +13,29 @@ class ProductDisplay extends StatefulWidget {
 }
 
 class _ProductDisplayState extends State<ProductDisplay> {
-  final Map<String, String> productInfo = {
-    'Lenovo Laptop': 'image/o.jpg',
-    'Apple Watch': 'image/t.jpg',
-    'Iphone': 'image/th.jpg',
-    'TU-PR Perfume': 'image/f.jpg',
-    'SLR Camera': 'image/fi.jpg',
-    'Mac Book PRO': 'image/6.jpg',
-    'HE Keyboard': 'image/7.jpg',
-    'Apple PC': 'image/8.jpg',
-    'Apple PC PRO': 'image/9.jpg',
-    'RTX 4090': 'image/10.jpg',
-    'Audio Soft': 'image/11.jpg',
-    'HE Phone': 'image/12.jpg',
-    'FS VPN Year plan': 'image/13.jpg',
-    'Mercedes-Benz': 'image/14.jpg',
-    'Ferrari': 'image/15.jpg',
-    'Black Hype': 'image/16.jpg',
-    'Power Blast': 'image/17.jpg',
-  };
 
-  final List<String> colorOfItems = [
-    'lite Silver',
-    'blackK',
-    'Milky white',
-    'purple',
-    'Dark Black',
-    'Dark White',
-    'Dark grey',
-    'Dark orange',
-    'Dark blue',
-    'Dark green',
-    'Dark sky',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-    'Dark space',
-    'Dark lemon',
-    'Dark green',
-    'Dark red',
-    'ultra Black',
-    'lite Black',
-  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _apiCallShow();
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: _productDisplayAppBar(),
-      body: _productList(),
+      body: RefreshIndicator(
+        color: Colors.white,
+        backgroundColor: Colors.red,
+        onRefresh: _apiCallShow,
+          child: Visibility(
+            visible: _loading == false,
+              replacement: Center(
+                child: CircularProgressIndicator( color: Colors.red, backgroundColor: Colors.black,),
+              ),
+              child: _productList()),),
       floatingActionButton: _addFloatingActionButton(context),
     );
   }
@@ -109,23 +59,130 @@ class _ProductDisplayState extends State<ProductDisplay> {
     );
   }
 
+//------------------------------------------------------------------------Variables------------------------------------------------------------------------
+
+  bool _loading = true;
+
+  List<Product> _productListVariable = [];
+
+  final Map<String, String> _productInfo = {
+    'Lenovo Laptop': 'image/o.jpg',
+    'Apple Watch': 'image/t.jpg',
+    'Iphone': 'image/th.jpg',
+    'TU-PR Perfume': 'image/f.jpg',
+    'SLR Camera': 'image/fi.jpg',
+    'Mac Book PRO': 'image/6.jpg',
+    'HE Keyboard': 'image/7.jpg',
+    'Apple PC': 'image/8.jpg',
+    'Apple PC PRO': 'image/9.jpg',
+    'RTX 4090': 'image/10.jpg',
+    'Audio Soft': 'image/11.jpg',
+    'HE Phone': 'image/12.jpg',
+    'FS VPN Year plan': 'image/13.jpg',
+    'Mercedes-Benz': 'image/14.jpg',
+    'Ferrari': 'image/15.jpg',
+    'Black Hype': 'image/16.jpg',
+    'Power Blast': 'image/17.jpg',
+    'Mac Book PRO ': 'image/6.jpg',
+    'HE Keyboard ': 'image/7.jpg',
+    'Apple PC ': 'image/8.jpg',
+    'Lenovo Laptop ': 'image/o.jpg',
+    'Apple Watch ': 'image/t.jpg',
+    'Iphone ': 'image/th.jpg',
+    'TU-PR Perfume ': 'image/f.jpg',
+    'SLR Camera ': 'image/fi.jpg',
+    'Mac PRO ': 'image/6.jpg',
+    'Keyboard ': 'image/7.jpg',
+    'Apple Computer': 'image/8.jpg',
+    'Apple PC PRO ': 'image/9.jpg',
+    'RTX 4090 ': 'image/10.jpg',
+    'Audio Soft ': 'image/11.jpg',
+    'HE Phone ': 'image/12.jpg',
+    'FS VPN Year plan ': 'image/13.jpg',
+    'Mercedes-Benz ': 'image/14.jpg',
+    'Ferrari ': 'image/15.jpg',
+    'Black Hype ': 'image/16.jpg',
+    'PC': 'image/9.jpg',
+    'Laptop ': 'image/o.jpg',
+    'Watch ': 'image/t.jpg',
+    'Iphone PRO': 'image/th.jpg',
+    '1': 'image/6.jpg',
+    '2': 'image/6.jpg',
+    '3': 'image/6.jpg',
+    '4': 'image/6.jpg',
+    '5': 'image/6.jpg',
+    '6': 'image/6.jpg',
+    '7': 'image/6.jpg',
+    '8': 'image/6.jpg',
+    '9': 'image/6.jpg',
+    '10': 'image/6.jpg',
+    '11': 'image/6.jpg',
+    '12': 'image/6.jpg',
+    '13': 'image/6.jpg',
+    '14': 'image/6.jpg',
+    '15': 'image/6.jpg',
+    '16': 'image/6.jpg',
+    '17': 'image/6.jpg',
+    '18': 'image/6.jpg',
+    '19': 'image/6.jpg',
+    '20': 'image/6.jpg',
+  };
+
+  //------------------------------------------------------------------------Functions------------------------------------------------------------------------
+
+  Future<void> _apiCallShow() async{
+    _productListVariable.clear();
+    //step 1: set url
+    const productServer = 'https://crud.teamrabbil.com/api/v1/ReadProduct';
+    //parse in Uri
+    Uri uri = Uri.parse(productServer);
+    //step 2: wait for response
+    Response getResponseFromServer = await get(uri);
+    //step 3: decode data
+    final serverData = jsonDecode(getResponseFromServer.body);
+    //Step 4: use that data
+    final listOfProducts = serverData["data"];
+    if(getResponseFromServer.statusCode == 200){
+      for(Map<String, dynamic> i in listOfProducts){
+        Product finalProduct = Product.fromJson(i);
+        _productListVariable.add(finalProduct);
+      }
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error: Check your internet connection!'), backgroundColor: Colors.red,));
+    }
+    setState(() {_loading = false;});
+  }
+
+  Future<void> _apiCallDelete(String id) async{
+    final productServer = 'https://crud.teamrabbil.com/api/v1/DeleteProduct/$id';
+    Uri uri = Uri.parse(productServer);
+    Response getResponseFromServer = await get(uri);
+    if(getResponseFromServer.statusCode == 200){
+      _apiCallShow();
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed!')));
+    }
+  }
+
+  //------------------------------------------------------------------------Widgets------------------------------------------------------------------------
+
   ListView _productList() {
     return ListView.separated(
         itemBuilder: (context, i) {
           return ListTile(
               leading: Image.asset(
-                productInfo.values.toList()[i],
+                (_productInfo.values.toList()[i]),
                 height: 60,
                 fit: BoxFit.cover,
               ),
               title: Text(
-                productInfo.keys.toList()[i],
+                (_productListVariable[i].productName) ?? 'Unknown',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
               ),
               subtitle: Text(
-                'Price: ${999 * (i + 1) - 100 - 20 * i * i - i * 20 + i}\$ Color: ${colorOfItems[i].toUpperCase()}',
+                'Price: ${(_productListVariable[i].unitPrice) ?? 'Unknown'}, Quantity: ${(_productListVariable[i].quantity)??"Unknown"}, Total Price: ${(_productListVariable[i].totalPrice)??"Unknown"}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
@@ -133,7 +190,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
               trailing: Wrap(
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: (){_apiCallDelete((_productListVariable[i].id)??'');},
                       icon: const Icon(Icons.delete_forever_outlined)),
                   IconButton(
                       onPressed: () {
@@ -149,7 +206,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
         separatorBuilder: (context, i) {
           return const Divider();
         },
-        itemCount: productInfo.length);
+        itemCount: _productListVariable.length);
   }
 
   AppBar _productDisplayAppBar() {
