@@ -1,3 +1,4 @@
+//-------------------------------------------------------------------Import Section-------------------------------------------------------------------
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -13,7 +14,6 @@ class ProductDisplay extends StatefulWidget {
 }
 
 class _ProductDisplayState extends State<ProductDisplay> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -30,32 +30,17 @@ class _ProductDisplayState extends State<ProductDisplay> {
         color: Colors.white,
         backgroundColor: Colors.red,
         onRefresh: _apiCallShow,
-          child: Visibility(
+        child: Visibility(
             visible: _loading == false,
-              replacement: Center(
-                child: CircularProgressIndicator( color: Colors.red, backgroundColor: Colors.black,),
+            replacement: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.red,
+                backgroundColor: Colors.black,
               ),
-              child: _productList()),),
-      floatingActionButton: _addFloatingActionButton(context),
-    );
-  }
-
-  FloatingActionButton _addFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {},
-      child: IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return AddItem();
-              },
             ),
-          );
-        },
-        icon: const Icon(Icons.add),
+            child: _productList()),
       ),
+      floatingActionButton: _addFloatingActionButton(context),
     );
   }
 
@@ -63,7 +48,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
 
   bool _loading = true;
 
-  List<Product> _productListVariable = [];
+  final List<Product> _productListVariable = [];
 
   final Map<String, String> _productInfo = {
     'Lenovo Laptop': 'image/o.jpg',
@@ -130,7 +115,10 @@ class _ProductDisplayState extends State<ProductDisplay> {
 
   //------------------------------------------------------------------------Functions------------------------------------------------------------------------
 
-  Future<void> _apiCallShow() async{
+  Future<void> _apiCallShow() async {
+    setState(() {
+      _loading = true;
+    });
     _productListVariable.clear();
     //step 1: set url
     const productServer = 'https://crud.teamrabbil.com/api/v1/ReadProduct';
@@ -142,25 +130,72 @@ class _ProductDisplayState extends State<ProductDisplay> {
     final serverData = jsonDecode(getResponseFromServer.body);
     //Step 4: use that data
     final listOfProducts = serverData["data"];
-    if(getResponseFromServer.statusCode == 200){
-      for(Map<String, dynamic> i in listOfProducts){
+    if (getResponseFromServer.statusCode == 200) {
+      for (Map<String, dynamic> i in listOfProducts) {
         Product finalProduct = Product.fromJson(i);
         _productListVariable.add(finalProduct);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'You are connected!',
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.green,
+          ),
+        );
       }
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error: Check your internet connection!'), backgroundColor: Colors.red,));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Error: Check your internet connection!'),
+        backgroundColor: Colors.red,
+      ));
     }
-    setState(() {_loading = false;});
+    setState(() {
+      _loading = false;
+    });
   }
 
-  Future<void> _apiCallDelete(String id) async{
-    final productServer = 'https://crud.teamrabbil.com/api/v1/DeleteProduct/$id';
+  void _update(int i) {
+    String iD = _productListVariable[i].id.toString();
+    String name = _productListVariable[i].productName.toString();
+    String code = _productListVariable[i].productCode.toString();
+    String img = 'https:';
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return UpdateItem(
+        productName: name,
+        productCode: code,
+        productImage: img,
+        productId: iD,
+      );
+    }));
+  }
+
+  Future<void> _apiCallDelete(String id) async {
+    final productServer =
+        'https://crud.teamrabbil.com/api/v1/DeleteProduct/$id';
     Uri uri = Uri.parse(productServer);
     Response getResponseFromServer = await get(uri);
-    if(getResponseFromServer.statusCode == 200){
+    if (getResponseFromServer.statusCode == 200) {
       _apiCallShow();
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed!')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Success!',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Failed!',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -182,7 +217,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
                 ),
               ),
               subtitle: Text(
-                'Price: ${(_productListVariable[i].unitPrice) ?? 'Unknown'}, Quantity: ${(_productListVariable[i].quantity)??"Unknown"}, Total Price: ${(_productListVariable[i].totalPrice)??"Unknown"}',
+                'Price: ${(_productListVariable[i].unitPrice) ?? 'Unknown'}, Quantity: ${(_productListVariable[i].quantity) ?? "Unknown"}, Total Price: ${(_productListVariable[i].totalPrice) ?? "Unknown"}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
@@ -190,14 +225,13 @@ class _ProductDisplayState extends State<ProductDisplay> {
               trailing: Wrap(
                 children: [
                   IconButton(
-                      onPressed: (){_apiCallDelete((_productListVariable[i].id)??'');},
+                      onPressed: () {
+                        _apiCallDelete((_productListVariable[i].id) ?? '');
+                      },
                       icon: const Icon(Icons.delete_forever_outlined)),
                   IconButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return UpdateItem();
-                        }));
+                        _update(i);
                       },
                       icon: const Icon(Icons.edit_outlined))
                 ],
@@ -214,6 +248,25 @@ class _ProductDisplayState extends State<ProductDisplay> {
       titleSpacing: 0,
       leading: const Icon(Icons.policy_rounded),
       title: const Text('Product Display'),
+    );
+  }
+
+  FloatingActionButton _addFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const AddItem();
+              },
+            ),
+          );
+        },
+        icon: const Icon(Icons.add),
+      ),
     );
   }
 }

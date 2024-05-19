@@ -12,9 +12,11 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: _lightTheme(),
       darkTheme: _darkTheme(),
-      home: ProductDisplay(),
+      home: const ProductDisplay(),
     );
   }
+
+  //-------------------------------------------------------------------Widgets-------------------------------------------------------------------
 
   ThemeData _darkTheme() {
     return ThemeData(
