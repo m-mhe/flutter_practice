@@ -135,16 +135,17 @@ class _ProductDisplayState extends State<ProductDisplay> {
       for (Map<String, dynamic> i in listOfProducts) {
         Product finalProduct = Product.fromJson(i);
         _productListVariable.add(finalProduct);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'You are connected!',
-              textAlign: TextAlign.center,
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 1),
+          content: Text(
+            'You are connected!',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Error: Check your internet connection!'),
@@ -163,13 +164,16 @@ class _ProductDisplayState extends State<ProductDisplay> {
     String price = _productListVariable[i].unitPrice.toString();
     String qty = _productListVariable[i].quantity.toString();
     String totalPrice = _productListVariable[i].totalPrice.toString();
-    String img = 'https:';
+    String img = _productListVariable[i].image.toString().trim();
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return UpdateItem(
         productName: name,
         productCode: code,
         productImage: img,
-        productId: iD, productPrice: price, productQty: qty, productTotalPrice: totalPrice,
+        productId: iD,
+        productPrice: price,
+        productQty: qty,
+        productTotalPrice: totalPrice,
       );
     }));
   }

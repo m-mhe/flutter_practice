@@ -10,7 +10,10 @@ class UpdateItem extends StatefulWidget {
       required this.productName,
       required this.productCode,
       required this.productImage,
-      required this.productId, required this.productPrice, required this.productQty, required this.productTotalPrice});
+      required this.productId,
+      required this.productPrice,
+      required this.productQty,
+      required this.productTotalPrice});
 
   final String productName;
   final String productCode;
@@ -53,62 +56,11 @@ class _UpdateItemState extends State<UpdateItem> {
               const Divider(),
               _productCodeTextField(context),
               const Divider(),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width / 1.1,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  onChanged: (v){
-                    _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
-                  },
-                  controller: _tECUnitPrice,
-                  validator: (String? value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please Write a product price:';
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      hintText: 'Product price', labelText: 'Product price:'),
-                ),
-              ),
+              _productPriceTextFromField(context),
               const Divider(),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width / 1.1,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  onChanged: (v){
-                    _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
-                  },
-                  controller: _tECQuantity,
-                  validator: (String? value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please set a quantity:';
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      hintText: 'set a quantity', labelText: 'set a quantity:'),
-                ),
-              ),
+              _productQuantityTextField(context),
               const Divider(),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width / 1.1,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _tECTotalPrice,
-                  validator: (String? value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Total price:';
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      hintText: 'Total price', labelText: 'Total price:'),
-                ),
-              ),
+              _productTotalPriceTextField(context),
               const Divider(),
               _productImageLocationTextField(context),
               _updateButton(context),
@@ -145,6 +97,9 @@ class _UpdateItemState extends State<UpdateItem> {
     Map<String, dynamic> updateThis = {
       "ProductName": _tECProductName.text,
       "ProductCode": _tECProductCode.text,
+      "UnitPrice": _tECUnitPrice.text,
+      "Qty": _tECQuantity.text,
+      "TotalPrice": _tECTotalPrice.text,
       "Img": _tECProductImageLocation.text.trim(),
     };
     final String server =
@@ -154,13 +109,19 @@ class _UpdateItemState extends State<UpdateItem> {
         headers: {"content-type": "application/json"},
         body: jsonEncode(updateThis));
     if (getResponseFromServer.statusCode == 200) {
-      _tECProductImageLocation.clear();
-      _tECProductCode.clear();
-      _tECProductName.clear();
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
         return const ProductDisplay();
       }), (route) => false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Updated!',
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
@@ -176,6 +137,73 @@ class _UpdateItemState extends State<UpdateItem> {
   }
 
   //-------------------------------------------------------------------Widgets-------------------------------------------------------------------
+  SizedBox _productTotalPriceTextField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: _tECTotalPrice,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Total price:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'Total price', labelText: 'Total price:'),
+      ),
+    );
+  }
+
+  SizedBox _productQuantityTextField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        onChanged: (v) {
+          _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text) ?? 0) *
+                  (double.tryParse(_tECQuantity.text) ?? 0))
+              .toStringAsFixed(2);
+        },
+        controller: _tECQuantity,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please set a quantity:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'set a quantity', labelText: 'set a quantity:'),
+      ),
+    );
+  }
+
+  SizedBox _productPriceTextFromField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        onChanged: (v) {
+          _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text) ?? 0) *
+                  (double.tryParse(_tECQuantity.text) ?? 0))
+              .toStringAsFixed(2);
+        },
+        controller: _tECUnitPrice,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please Write a product price:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'Product price', labelText: 'Product price:'),
+      ),
+    );
+  }
+
   Widget _updateButton(BuildContext context) {
     return Visibility(
       visible: loading == false,
@@ -274,5 +302,16 @@ class _UpdateItemState extends State<UpdateItem> {
       leading: const Icon(Icons.update),
       title: const Text('Update Product'),
     );
+  }
+
+  @override
+  void dispose() {
+    _tECUnitPrice.dispose();
+    _tECQuantity.dispose();
+    _tECTotalPrice.dispose();
+    _tECProductName.dispose();
+    _tECProductCode.dispose();
+    _tECProductImageLocation.dispose();
+    super.dispose();
   }
 }

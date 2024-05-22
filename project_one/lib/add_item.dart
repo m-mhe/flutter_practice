@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:project_one/product_display.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({super.key});
@@ -28,62 +29,11 @@ class _AddItemState extends State<AddItem> {
               const Divider(),
               _productCodeTextField(context),
               const Divider(),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width / 1.1,
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                onChanged: (v){
-                  _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
-                },
-                controller: _tECUnitPrice,
-                validator: (String? value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please Write a product price:';
-                  }
-                  return null;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                decoration: const InputDecoration(
-                    hintText: 'Product price', labelText: 'Product price:'),
-              ),
-            ),
+              _productPriceTextField(context),
               const Divider(),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width / 1.1,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  onChanged: (v){
-                    _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
-                  },
-                  controller: _tECQuantity,
-                  validator: (String? value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please set a quantity:';
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      hintText: 'set a quantity', labelText: 'set a quantity:'),
-                ),
-              ),
+              _productQuantityTextField(context),
               const Divider(),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width / 1.1,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _tECTotalPrice,
-                  validator: (String? value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Total price:';
-                    }
-                    return null;
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      hintText: 'Total price', labelText: 'Total price:'),
-                ),
-              ),
+              _productTotalPriceTextField(context),
               const Divider(),
               _productImageLocationTextField(context),
               _addButton(context),
@@ -136,13 +86,14 @@ class _AddItemState extends State<AddItem> {
       _loading = false;
     });
     if (getResponseFromServer.statusCode == 200) {
-      _tECProductImageLocation.clear();
-      _tECProductCode.clear();
-      _tECProductName.clear();
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return const ProductDisplay();
+      }), (route) => false);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Success!',
+            'Added!',
             textAlign: TextAlign.center,
           ),
           backgroundColor: Colors.green,
@@ -162,6 +113,73 @@ class _AddItemState extends State<AddItem> {
   }
 
   //-------------------------------------------------------------------Widgets-------------------------------------------------------------------
+  SizedBox _productTotalPriceTextField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: _tECTotalPrice,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Total price:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'Total price', labelText: 'Total price:'),
+      ),
+    );
+  }
+
+  SizedBox _productQuantityTextField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        onChanged: (v) {
+          _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text) ?? 0) *
+                  (double.tryParse(_tECQuantity.text) ?? 0))
+              .toStringAsFixed(2);
+        },
+        controller: _tECQuantity,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please set a quantity:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'set a quantity', labelText: 'set a quantity:'),
+      ),
+    );
+  }
+
+  SizedBox _productPriceTextField(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width / 1.1,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        onChanged: (v) {
+          _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text) ?? 0) *
+                  (double.tryParse(_tECQuantity.text) ?? 0))
+              .toStringAsFixed(2);
+        },
+        controller: _tECUnitPrice,
+        validator: (String? value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'Please Write a product price:';
+          }
+          return null;
+        },
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+            hintText: 'Product price', labelText: 'Product price:'),
+      ),
+    );
+  }
+
   Widget _addButton(BuildContext context) {
     return Visibility(
       visible: _loading == false,
@@ -262,5 +280,16 @@ class _AddItemState extends State<AddItem> {
       leading: const Icon(Icons.add_shopping_cart),
       title: const Text('Add Product'),
     );
+  }
+
+  @override
+  void dispose() {
+    _tECUnitPrice.dispose();
+    _tECQuantity.dispose();
+    _tECTotalPrice.dispose();
+    _tECProductName.dispose();
+    _tECProductCode.dispose();
+    _tECProductImageLocation.dispose();
+    super.dispose();
   }
 }
