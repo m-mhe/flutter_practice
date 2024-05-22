@@ -50,6 +50,7 @@ class _ProductDisplayState extends State<ProductDisplay> {
 
   final List<Product> _productListVariable = [];
 
+  //Default images is being used, because of invalid image link (from api).
   final Map<String, String> _productInfo = {
     'Lenovo Laptop': 'image/o.jpg',
     'Apple Watch': 'image/t.jpg',
@@ -159,13 +160,16 @@ class _ProductDisplayState extends State<ProductDisplay> {
     String iD = _productListVariable[i].id.toString();
     String name = _productListVariable[i].productName.toString();
     String code = _productListVariable[i].productCode.toString();
+    String price = _productListVariable[i].unitPrice.toString();
+    String qty = _productListVariable[i].quantity.toString();
+    String totalPrice = _productListVariable[i].totalPrice.toString();
     String img = 'https:';
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return UpdateItem(
         productName: name,
         productCode: code,
         productImage: img,
-        productId: iD,
+        productId: iD, productPrice: price, productQty: qty, productTotalPrice: totalPrice,
       );
     }));
   }

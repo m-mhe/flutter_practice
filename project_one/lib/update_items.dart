@@ -10,10 +10,13 @@ class UpdateItem extends StatefulWidget {
       required this.productName,
       required this.productCode,
       required this.productImage,
-      required this.productId});
+      required this.productId, required this.productPrice, required this.productQty, required this.productTotalPrice});
 
   final String productName;
   final String productCode;
+  final String productPrice;
+  final String productQty;
+  final String productTotalPrice;
   final String productImage;
   final String productId;
 
@@ -26,6 +29,9 @@ class _UpdateItemState extends State<UpdateItem> {
   void initState() {
     _tECProductName.text = widget.productName;
     _tECProductCode.text = widget.productCode;
+    _tECUnitPrice.text = widget.productPrice;
+    _tECQuantity.text = widget.productQty;
+    _tECTotalPrice.text = widget.productTotalPrice;
     _tECProductImageLocation.text = widget.productImage;
     super.initState();
   }
@@ -47,6 +53,63 @@ class _UpdateItemState extends State<UpdateItem> {
               const Divider(),
               _productCodeTextField(context),
               const Divider(),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 1.1,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (v){
+                    _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
+                  },
+                  controller: _tECUnitPrice,
+                  validator: (String? value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please Write a product price:';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(
+                      hintText: 'Product price', labelText: 'Product price:'),
+                ),
+              ),
+              const Divider(),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 1.1,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (v){
+                    _tECTotalPrice.text = ((double.tryParse(_tECUnitPrice.text)??0)*(double.tryParse(_tECQuantity.text)??0)).toStringAsFixed(2);
+                  },
+                  controller: _tECQuantity,
+                  validator: (String? value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please set a quantity:';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(
+                      hintText: 'set a quantity', labelText: 'set a quantity:'),
+                ),
+              ),
+              const Divider(),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 1.1,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _tECTotalPrice,
+                  validator: (String? value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Total price:';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: const InputDecoration(
+                      hintText: 'Total price', labelText: 'Total price:'),
+                ),
+              ),
+              const Divider(),
               _productImageLocationTextField(context),
               _updateButton(context),
             ],
@@ -64,6 +127,12 @@ class _UpdateItemState extends State<UpdateItem> {
   final TextEditingController _tECProductName = TextEditingController();
 
   final TextEditingController _tECProductCode = TextEditingController();
+
+  final TextEditingController _tECUnitPrice = TextEditingController();
+
+  final TextEditingController _tECQuantity = TextEditingController();
+
+  final TextEditingController _tECTotalPrice = TextEditingController();
 
   final TextEditingController _tECProductImageLocation =
       TextEditingController();
