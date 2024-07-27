@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 //The code execution point
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 //If we want to use a class as a widget, then we have to inherit (extends) the StatelessWidget class.
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
